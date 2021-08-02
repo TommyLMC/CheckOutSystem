@@ -1,20 +1,13 @@
 package com.supermarket.CheckOutJavaMaven;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.logging.Logger;
-import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootTest
 class CheckOutJavaMavenApplicationTests {
-
-	private static final Logger logger = LoggerFactory.getLogger(CheckOutJavaMavenApplicationTests.class);
 
 	private Map<String,Items> itemsMap;
 
@@ -122,4 +115,5 @@ class CheckOutJavaMavenApplicationTests {
 
 		Assert.assertEquals(expected,actual);
 	}
+
 }

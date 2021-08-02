@@ -45,17 +45,22 @@ public class CheckOutJavaMavenApplication {
 			}
 			System.out.println(itemsMap);
 
-			// input "CHECKOUT" to quit the scan
-	        while(true) {
+			while(true) {
 				System.out.print("Input item code to continue or [checkout] to quit: ");
 				input = scanner.next().toUpperCase();
+				// input "CHECKOUT" to quit the scan
 				if (input.equals("CHECKOUT"))
 					break;
-				if (shoppingCart.containsKey(input)) {
-					Integer count = shoppingCart.get(input);
-					shoppingCart.put(input, count + 1);
+				// check the input item exists in the item list
+				if (itemsMap.containsKey(input) == false) {
+					System.out.println("Invalid item code!");
 				} else {
-					shoppingCart.put(input, 1);
+					if (shoppingCart.containsKey(input)) {
+						Integer count = shoppingCart.get(input);
+						shoppingCart.put(input, count + 1);
+					} else {
+						shoppingCart.put(input, 1);
+					}
 				}
 			}
 
