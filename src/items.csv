@@ -1,0 +1,5 @@
+sku,price,discount,specialUnit,specialPrice
+A,50,Y,3,130
+B,30,Y,2,45
+C,20,N,0,0
+D,15,N,0,0
