@@ -11,7 +11,6 @@ public class PricingRules {
             int remainUnit = 0;
             int subTotal = 0;
             Items item = itemsMap.get(entry.getKey());
-            System.out.println("Item: "+item.getSku()+", unit scanned: "+entry.getValue());
             // Special Price
             if (item.getDiscount().equals("Y")) {
                 // Times of Special Price
@@ -23,7 +22,7 @@ public class PricingRules {
             // Original Price
             } else
                 subTotal = subTotal + item.getPrice() * entry.getValue();
-            System.out.println("Sub-Total amount: "+subTotal);
+            System.out.println("Item: "+item.getSku()+", unit scanned: "+entry.getValue()+", amount: "+subTotal);
 
             // Total amount
             totalAmount = totalAmount + subTotal;
