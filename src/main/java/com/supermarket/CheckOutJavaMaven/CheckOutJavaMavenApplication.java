@@ -27,7 +27,6 @@ public class CheckOutJavaMavenApplication {
 
 		// Get the item list
 		itemsMap = getMapFromFile(file);
-		System.out.println(itemsMap);
 
 		// Get the shopping cart
 		shoppingCart = getMapOfShoppingCart(itemsMap);
@@ -55,9 +54,9 @@ public class CheckOutJavaMavenApplication {
 
 				itemsMap.put(record.get(0), items);
 			}
-			//System.out.println(itemsMap);
+			System.out.println(itemsMap);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Item list file not found!");
 		}
 		return itemsMap;
 	}
