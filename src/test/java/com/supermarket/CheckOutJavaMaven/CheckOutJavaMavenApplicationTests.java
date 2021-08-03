@@ -3,8 +3,8 @@ package com.supermarket.CheckOutJavaMaven;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 
 @SpringBootTest
 class CheckOutJavaMavenApplicationTests {
@@ -39,6 +39,16 @@ class CheckOutJavaMavenApplicationTests {
 		itemsMap.put("C",itemsC);
 		System.out.println("itemsMap="+itemsMap.entrySet());
 
+	}
+
+	@Test
+	public void getMapFromFileTest(){
+		String file = "src\\items.csv";
+		itemsMap = new HashMap<>();
+		itemsMap = CheckOutJavaMavenApplication.getMapFromFile(file);
+		System.out.println("List of items: "+itemsMap.entrySet());
+
+		Assert.assertNotNull(itemsMap);
 	}
 
 	@Test

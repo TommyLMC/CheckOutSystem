@@ -70,12 +70,6 @@ public class CheckOutJavaMavenApplication {
 			while (true) {
 				System.out.print("Input item code to continue or [checkout] to quit: ");
 				input = scanner.next().toUpperCase();
-				System.out.println(input);
-				// check didn't input anything
-				if (input.isBlank()) {
-					System.out.println("Item code not found!");
-					continue;
-				}
 				// input "CHECKOUT" to quit the scan
 				if (input.equals("CHECKOUT"))
 					break;
