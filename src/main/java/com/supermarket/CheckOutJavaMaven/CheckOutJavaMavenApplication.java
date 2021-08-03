@@ -32,8 +32,7 @@ public class CheckOutJavaMavenApplication {
 		shoppingCart = getMapOfShoppingCart(itemsMap);
 
 		// calculate total amount
-		if (itemsMap.size() > 0 && shoppingCart.size() > 0)
-			totalAmount = pricingRules.calculateTotalPrice(shoppingCart, itemsMap);
+		totalAmount = pricingRules.calculateTotalPrice(shoppingCart, itemsMap);
 
 		System.out.println("Total amount: " + totalAmount);
 	}

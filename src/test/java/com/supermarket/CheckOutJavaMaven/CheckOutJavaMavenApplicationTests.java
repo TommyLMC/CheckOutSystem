@@ -42,6 +42,17 @@ class CheckOutJavaMavenApplicationTests {
 	}
 
 	@Test
+	public void getMapFromFileTest(){
+		// Load the item list
+		String file = "src\\items.csv";
+		itemsMap = new HashMap<>();
+		itemsMap = CheckOutJavaMavenApplication.getMapFromFile(file);
+		System.out.println("List of items: "+itemsMap.entrySet());
+
+		Assert.assertNotNull(itemsMap);
+	}
+
+	@Test
 	public void calculateTotalPriceTest1(){
 		init();
 
@@ -121,8 +132,7 @@ class CheckOutJavaMavenApplicationTests {
 		init();
 
 		Map<String, Integer> shoppingCart = new HashMap<>();
-		// 2 set of special price for item A and B,
-		// 1 unit of original price for item C
+		// 1 unit of original price for item A, B and C
 		shoppingCart.put("A", 1);
 		shoppingCart.put("B", 1);
 		shoppingCart.put("C", 1);
@@ -136,12 +146,21 @@ class CheckOutJavaMavenApplicationTests {
 	}
 
 	@Test
-	public void getMapFromFileTest(){
-		String file = "src\\items.csv";
-		itemsMap = new HashMap<>();
-		itemsMap = CheckOutJavaMavenApplication.getMapFromFile(file);
-		System.out.println("List of items: "+itemsMap.entrySet());
+	public void calculateTotalPriceTest6(){
+		init();
 
-		Assert.assertNotNull(itemsMap);
+		Map<String, Integer> shoppingCart = new HashMap<>();
+		// 1 unit of original price for item A & C, not B
+		shoppingCart.put("A", 1);
+		//shoppingCart.put("B", 1);
+		shoppingCart.put("C", 1);
+
+		PricingRules pricingRules = new PricingRules();
+		int actual = pricingRules.calculateTotalPrice(shoppingCart,itemsMap);
+		int expected = 70; // 50 + 20
+		System.out.println("Total amount: "+actual);
+
+		Assert.assertEquals(expected,actual);
 	}
+
 }
