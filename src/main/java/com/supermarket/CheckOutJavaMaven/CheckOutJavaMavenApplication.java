@@ -20,20 +20,32 @@ public class CheckOutJavaMavenApplication {
 		SpringApplication.run(CheckOutJavaMavenApplication.class, args);
 		// Item list file path
 		String file = "src\\items.csv";
-
-		Scanner scanner = new Scanner(System.in);
-		String input = "";
-		//Items items = new Items();
-		Map<String, Integer> shoppingCart = new HashMap<>();
+		Map<String, Items> itemsMap;
+		Map<String, Integer> shoppingCart;
 		PricingRules pricingRules = new PricingRules();
 		int totalAmount = 0;
 
+		// Get the item list
+		itemsMap = getMapFromFile(file);
+		System.out.println(itemsMap);
+
+		// Get the shopping cart
+		shoppingCart = getMapOfShoppingCart(itemsMap);
+
+		// calculate total amount
+		if (itemsMap.size() > 0 && shoppingCart.size() > 0)
+			totalAmount = pricingRules.calculateTotalPrice(shoppingCart, itemsMap);
+
+		System.out.println("Total amount: " + totalAmount);
+	}
+
+	public static Map getMapFromFile(String file) {
+		Map<String, Items> itemsMap = new HashMap<>();
 		// Load the item list
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			CSVParser csvRecords = CSVParser.parse(reader, CSVFormat.EXCEL.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());
-			Map<String,Items> itemsMap = new HashMap<>();
-			for(CSVRecord record : csvRecords) {
+			for (CSVRecord record : csvRecords) {
 				Items items = new Items();
 				items.setSku(record.get(0));
 				items.setPrice(Integer.parseInt(record.get(1)));
@@ -41,18 +53,34 @@ public class CheckOutJavaMavenApplication {
 				items.setSpecialUnit(Integer.parseInt(record.get(3)));
 				items.setSpecialPrice(Integer.parseInt(record.get(4)));
 
-				itemsMap.put(record.get(0),items);
+				itemsMap.put(record.get(0), items);
 			}
-			System.out.println(itemsMap);
+			//System.out.println(itemsMap);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return itemsMap;
+	}
 
-			while(true) {
+	public static Map getMapOfShoppingCart(Map<String, Items> itemsMap) {
+		Scanner scanner = new Scanner(System.in);
+		String input;
+		Map<String, Integer> shoppingCart = new HashMap<>();
+		if (itemsMap.size() > 0) {
+			while (true) {
 				System.out.print("Input item code to continue or [checkout] to quit: ");
 				input = scanner.next().toUpperCase();
+				System.out.println(input);
+				// check didn't input anything
+				if (input.isBlank()) {
+					System.out.println("Item code not found!");
+					continue;
+				}
 				// input "CHECKOUT" to quit the scan
 				if (input.equals("CHECKOUT"))
 					break;
 				// check the input item exists in the item list
-				if (itemsMap.containsKey(input) == false) {
+				if (!itemsMap.containsKey(input)) {
 					System.out.println("Invalid item code!");
 				} else {
 					if (shoppingCart.containsKey(input)) {
@@ -63,15 +91,7 @@ public class CheckOutJavaMavenApplication {
 					}
 				}
 			}
-
-	        // calculate total amount
-			if (shoppingCart.size() > 0)
-				totalAmount = pricingRules.calculateTotalPrice(shoppingCart,itemsMap);
-
-        	System.out.println("Total amount: "+totalAmount);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
+		return shoppingCart;
 	}
-
 }
