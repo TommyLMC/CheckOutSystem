@@ -1,6 +1,7 @@
 package com.supermarket.CheckOutJavaMaven;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -10,6 +11,8 @@ import java.util.*;
 class CheckOutJavaMavenApplicationTests {
 
 	private Map<String,Items> itemsMap;
+	String input="A";
+	Map<String, Integer> shoppingCart = new HashMap<>();
 
 	public void init(){
 		itemsMap = new HashMap<>();
@@ -56,7 +59,7 @@ class CheckOutJavaMavenApplicationTests {
 	public void calculateTotalPriceTest1(){
 		init();
 
-		Map<String, Integer> shoppingCart = new HashMap<>();
+		shoppingCart = new HashMap<>();
 		// 1 set of special price of item A and B,
 		// 1 unit of original price for item C
 		shoppingCart.put("A", 3);
@@ -75,7 +78,7 @@ class CheckOutJavaMavenApplicationTests {
 	public void calculateTotalPriceTest2(){
 		init();
 
-		Map<String, Integer> shoppingCart = new HashMap<>();
+		shoppingCart = new HashMap<>();
 		// 2 set of special price + 1 unit of original price for item A and B,
 		// 1 unit of original price for item C
 		shoppingCart.put("A", 4);
@@ -94,7 +97,7 @@ class CheckOutJavaMavenApplicationTests {
 	public void calculateTotalPriceTest3(){
 		init();
 
-		Map<String, Integer> shoppingCart = new HashMap<>();
+		shoppingCart = new HashMap<>();
 		// Zero unit of item A, B and C
 		shoppingCart.put("A", 0);
 		shoppingCart.put("B", 0);
@@ -112,7 +115,7 @@ class CheckOutJavaMavenApplicationTests {
 	public void calculateTotalPriceTest4(){
 		init();
 
-		Map<String, Integer> shoppingCart = new HashMap<>();
+		shoppingCart = new HashMap<>();
 		// 2 set of special price for item A and B,
 		// 1 unit of original price for item C
 		shoppingCart.put("A", 6);
@@ -131,7 +134,7 @@ class CheckOutJavaMavenApplicationTests {
 	public void calculateTotalPriceTest5(){
 		init();
 
-		Map<String, Integer> shoppingCart = new HashMap<>();
+		shoppingCart = new HashMap<>();
 		// 1 unit of original price for item A, B and C
 		shoppingCart.put("A", 1);
 		shoppingCart.put("B", 1);
@@ -149,7 +152,7 @@ class CheckOutJavaMavenApplicationTests {
 	public void calculateTotalPriceTest6(){
 		init();
 
-		Map<String, Integer> shoppingCart = new HashMap<>();
+		shoppingCart = new HashMap<>();
 		// 1 unit of original price for item A & C, not B
 		shoppingCart.put("A", 1);
 		//shoppingCart.put("B", 1);
@@ -163,4 +166,30 @@ class CheckOutJavaMavenApplicationTests {
 		Assert.assertEquals(expected,actual);
 	}
 
+	@Test
+	public void getShoppingCartItemsTest(){
+		// initial case, empty shopping cart, scan the first item
+		Map<String, Integer> result = CheckOutJavaMavenApplication.getShoppingCartItems(input,shoppingCart);
+		System.out.println(result);
+		Assert.assertEquals(1,result.get(input).intValue());
+	}
+
+	@Test
+	public void getShoppingCartItemsTest2(){
+		// shopping cart is not empty, scan the same item
+		shoppingCart.put(input, 1);
+		Map<String, Integer> result = CheckOutJavaMavenApplication.getShoppingCartItems(input,shoppingCart);
+		System.out.println(result);
+		Assert.assertEquals(2,result.get(input).intValue());
+	}
+
+	@Test
+	public void getShoppingCartItemsTest3(){
+		// shopping cart is not empty, scan the different item
+		shoppingCart.put(input, 1);
+		shoppingCart.put("B", 1);
+		Map<String, Integer> result = CheckOutJavaMavenApplication.getShoppingCartItems(input,shoppingCart);
+		System.out.println(result);
+		Assert.assertEquals(1,result.get("B").intValue());
+	}
 }

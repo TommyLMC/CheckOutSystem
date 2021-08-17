@@ -64,6 +64,7 @@ public class CheckOutJavaMavenApplication {
 		Scanner scanner = new Scanner(System.in);
 		String input;
 		Map<String, Integer> shoppingCart = new HashMap<>();
+		Map<String, Integer>  result = new HashMap<>();
 		if (itemsMap.size() > 0) {
 			while (true) {
 				System.out.print("Input item code to continue or [checkout] to quit: ");
@@ -75,15 +76,27 @@ public class CheckOutJavaMavenApplication {
 				if (!itemsMap.containsKey(input)) {
 					System.out.println("Invalid item code!");
 				} else {
-					if (shoppingCart.containsKey(input)) {
-						Integer count = shoppingCart.get(input);
-						shoppingCart.put(input, count + 1);
-					} else {
-						shoppingCart.put(input, 1);
-					}
+//					if (shoppingCart.containsKey(input)) {
+//						Integer count = shoppingCart.get(input);
+//						shoppingCart.put(input, count + 1);
+//					} else {
+//						shoppingCart.put(input, 1);
+//					}
+					result = getShoppingCartItems(input, shoppingCart);
 				}
 			}
 		}
+		return result;
+	}
+
+	public static Map getShoppingCartItems(String input, Map<String, Integer> shoppingCart){
+		if (shoppingCart.containsKey(input)) {
+			Integer count = shoppingCart.get(input);
+			shoppingCart.put(input, count + 1);
+		} else {
+			shoppingCart.put(input, 1);
+		}
 		return shoppingCart;
 	}
+
 }
