@@ -73,17 +73,11 @@ public class CheckOutJavaMavenApplication {
 				if (input.equals("CHECKOUT"))
 					break;
 				// check the input item exists in the item list
-				if (!itemsMap.containsKey(input)) {
+				if (!itemsMap.containsKey(input))
 					System.out.println("Invalid item code!");
-				} else {
-//					if (shoppingCart.containsKey(input)) {
-//						Integer count = shoppingCart.get(input);
-//						shoppingCart.put(input, count + 1);
-//					} else {
-//						shoppingCart.put(input, 1);
-//					}
+				else
 					result = getShoppingCartItems(input, shoppingCart);
-				}
+
 			}
 		}
 		return result;
@@ -93,9 +87,9 @@ public class CheckOutJavaMavenApplication {
 		if (shoppingCart.containsKey(input)) {
 			Integer count = shoppingCart.get(input);
 			shoppingCart.put(input, count + 1);
-		} else {
+		} else
 			shoppingCart.put(input, 1);
-		}
+
 		return shoppingCart;
 	}
 
